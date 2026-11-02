@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101b2d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FORM">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.svg">
+<title>Form — Offline Fitness Coach</title>
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#172235;--muted:#718096;--line:#e8edf3;--navy:#101b2d;--green:#237b62;--mint:#e8f5ef;--orange:#e59a43;--red:#c75c5c;--shadow:0 8px 24px rgba(25,42,66,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+header{background:var(--navy);color:white;padding:22px 20px 25px;border-radius:0 0 25px 25px}
+.top{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;letter-spacing:1.8px;font-size:13px;color:#a9c8bb}.date{font-size:12px;color:#c2ccda}
+h1{font-size:27px;line-height:1.15;margin:20px 0 7px}header p{color:#c2ccda;margin:0;font-size:13px}
+main{max-width:720px;margin:auto;padding:17px 15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:13px;box-shadow:var(--shadow)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 11px}
+h2{font-size:17px;margin:0}h3{font-size:15px;margin:0 0 8px}.muted{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{background:#f7f9fb;border-radius:13px;padding:12px}.metric b{display:block;font-size:21px;margin:4px 0}.metric span{font-size:11px;color:var(--muted)}
+.progress{height:7px;background:#e9edf1;border-radius:10px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:var(--green);border-radius:10px;width:0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.pill{font-size:11px;padding:5px 9px;border-radius:20px;background:var(--mint);color:var(--green);font-weight:700}
+.meal{border-top:1px solid var(--line);padding:12px 0}.meal:first-child{border-top:0}.foodline{display:flex;gap:10px;align-items:flex-start}.foodline input{accent-color:var(--green);width:18px;height:18px;margin-top:2px}.foodname{font-weight:650}.foodmeta{font-size:12px;color:var(--muted);margin-top:3px}.controls{display:flex;align-items:center;gap:6px;margin-left:auto}.smallbtn{border:1px solid var(--line);background:white;border-radius:8px;padding:5px 9px;font-size:13px;color:var(--ink)}
+button{cursor:pointer} .btn{border:0;background:var(--navy);color:white;padding:11px 14px;border-radius:11px;font-weight:650}.btn.secondary{background:#edf2f6;color:var(--ink)}.btn.green{background:var(--green)}
+input[type=number],input[type=text],input[type=date],textarea,select{border:1px solid var(--line);border-radius:10px;padding:10px;background:white;color:var(--ink);font:inherit;width:100%}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 5px calc(9px + env(safe-area-inset-bottom));z-index:5}
+nav button{border:0;background:none;color:#7b8796;font-size:10px;font-weight:650;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:58px}nav button.active{color:var(--green)}nav .ico{font-size:19px}
+.tab{display:none}.tab.active{display:block}
+.daychips{display:flex;gap:6px;overflow:auto;padding:2px 0 12px}.daychips button{flex:0 0 auto;border:1px solid var(--line);background:white;border-radius:10px;padding:8px 11px;font-size:12px}.daychips button.active{background:var(--navy);color:white;border-color:var(--navy)}
+.exercise{padding:11px 0;border-top:1px solid var(--line)}.exercise:first-child{border-top:0}.exercise small{display:block;color:var(--muted);margin-top:3px}
+.water{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.water button{border:1px solid var(--line);background:#f7fafc;border-radius:9px;padding:8px 11px}
+.entry{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:end;margin-top:10px}
+.chart{width:100%;height:170px;background:#fafbfd;border-radius:12px;margin-top:12px}
+.notice{background:#fff7e9;border:1px solid #f4e4c6;color:#79521e;padding:12px;border-radius:12px;font-size:12px;line-height:1.5}
+details{border-top:1px solid var(--line);padding:11px 0}summary{font-weight:650;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:10px}
+@media(min-width:600px){main{padding:22px}header{padding-left:max(22px,calc((100% - 680px)/2));padding-right:max(22px,calc((100% - 680px)/2))}.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="brand">FORM / PERSONAL COACH</div><div class="date" id="todayDate"></div></div>
+ <h1>Build consistency.<br>Then build strength.</h1>
+ <p>Your offline-first body recomposition companion.</p>
+</header>
+<main>
+<section id="home" class="tab active">
+ <div class="section-head"><h2>Today's overview</h2><span class="pill" id="dayLabel">Day 1</span></div>
+ <div class="card">
+  <div class="grid">
+   <div class="metric"><span>CALORIES</span><b id="calNow">0</b><span id="calTarget">of 1,950 kcal</span><div class="progress"><i id="calBar"></i></div></div>
+   <div class="metric"><span>PROTEIN</span><b id="proNow">0 g</b><span>Target 150 g</span><div class="progress"><i id="proBar"></i></div></div>
+   <div class="metric"><span>WATER</span><b id="waterNow">0 ml</b><span>Target 2,500 ml</span><div class="progress"><i id="waterBar"></i></div></div>
+   <div class="metric"><span>MEALS DONE</span><b id="mealsNow">0/5</b><span>Tick meals as completed</span><div class="progress"><i id="mealBar"></i></div></div>
+  </div>
+ </div>
+ <div class="section-head"><h2>Today's focus</h2><span class="muted" id="focusType">Full body A</span></div>
+ <div class="card"><div class="row"><div><b id="focusTitle">Strength session</b><div class="muted" id="focusSub">Beginner · 25–35 min</div></div><button class="btn secondary" onclick="showTab('workout')">Open workout</button></div></div>
+ <div class="section-head"><h2>Quick actions</h2></div>
+ <div class="card">
+  <div class="row"><div><b>Water tracker</b><div class="muted">250 ml per tap</div></div><button class="btn green" onclick="addWater(250)">+ 250 ml</button></div>
+  <div class="water" id="waterButtons"></div>
+ </div>
+ <div class="card"><h3>Coach's note</h3><p class="muted" style="line-height:1.6;margin-bottom:0">Start around 1,950 kcal and 150 g protein. Aim for a steady trend, not a perfect day. We’ll adjust based on your 2–3 week weight and waist trend—not one random weigh-in.</p></div>
+</section>
+
+<section id="diet" class="tab">
+ <div class="section-head"><h2>Daily nutrition</h2><span class="muted">7-day rotation</span></div>
+ <div class="daychips" id="dayPicker"></div>
+ <div class="card"><div class="row"><div><b id="dietDayTitle">Day 1 · Balanced vegetarian + eggs</b><div class="muted">Tick each meal when you finish it. Adjust portions with − / +.</div></div></div></div>
+ <div class="card" id="mealList"></div>
+ <div class="card"><div class="row"><div><b>Daily totals</b><div class="muted">Calculated from your selected portions</div></div><b id="dietTotals">0 kcal · 0 g protein</b></div></div>
+ <div class="notice">Food values are estimates. Weigh dry soya/oats and packaged foods as listed; cooking oil, paneer brand and curd fat can change totals substantially. Keep oil measured.</div>
+</section>
+
+<section id="workout" class="tab">
+ <div class="section-head"><h2>Training plan</h2><span class="pill">Beginner</span></div>
+ <div class="daychips" id="workDays"></div>
+ <div class="card"><div class="row"><div><b id="workTitle">Full Body A</b><div class="muted" id="workDesc">Controlled reps · stop 2–3 reps before failure</div></div><span class="pill" id="workDuration">30 min</span></div><div id="exerciseList" style="margin-top:10px"></div></div>
+ <div class="card"><h3>Session feedback</h3><label>How did this session feel?</label><select id="feedback"><option>Comfortable</option><option>About right</option><option>Too easy</option><option>Too hard</option><option>Pain or discomfort</option></select><label style="margin-top:10px">Performance / notes</label><textarea id="workNote" rows="2" placeholder="e.g. Squats 3×12 felt easy; push-ups were difficult"></textarea><button class="btn green" style="margin-top:10px" onclick="saveWorkout()">Save session</button><p class="muted" id="workSaved"></p></div>
+ <div class="notice">No-equipment limitation: back/pulling muscles are hard to progressively overload safely without equipment. Prone Y-T-W and reverse snow angels help, but they are not a replacement for rows. A resistance band is the best low-cost upgrade when possible. Stop if you get sharp pain, dizziness or chest symptoms.</div>
+</section>
+
+<section id="progress" class="tab">
+ <div class="section-head"><h2>Progress log</h2><span class="muted">Use morning, post-toilet readings</span></div>
+ <div class="card"><div class="formgrid"><div><label>Weight (kg)</label><input id="weightInput" type="number" step=".1" placeholder="90.0"></div><div><label>Waist (cm)</label><input id="waistInput" type="number" step=".1" placeholder="94.0"></div></div><button class="btn green" style="margin-top:11px" onclick="addProgress()">Save today's measurements</button><p class="muted" id="progressSaved"></p><canvas id="progressChart" class="chart" width="640" height="300"></canvas><div class="muted">Weight trend · latest entries (line is a guide, not a diagnosis)</div><div id="progressHistory"></div></div>
+ <div class="card"><h3>Your starting targets</h3><div class="grid"><div class="metric"><span>STARTING WEIGHT</span><b>90 kg</b></div><div class="metric"><span>WAIST</span><b>94 cm</b></div><div class="metric"><span>CALORIES</span><b>1,950</b></div><div class="metric"><span>PROTEIN</span><b>150 g</b></div></div><p class="muted" style="line-height:1.5">Estimated BMR ≈ 1,919 kcal; sedentary TDEE ≈ 2,300 kcal. These are starting estimates, not measured metabolism. Aim for roughly 0.25–0.5 kg loss per week while maintaining strength.</p></div>
+</section>
+
+<section id="settings" class="tab">
+ <div class="section-head"><h2>Settings & backup</h2></div>
+ <div class="card"><h3>Your targets</h3><div class="formgrid"><div><label>Daily calories</label><input id="targetCal" type="number" value="1950"></div><div><label>Protein (g)</label><input id="targetPro" type="number" value="150"></div><div><label>Water (ml)</label><input id="targetWater" type="number" value="2500"></div><div><label>Daily steps goal</label><input id="targetSteps" type="number" value="6000"></div></div><button class="btn green" style="margin-top:11px" onclick="saveTargets()">Save targets</button></div>
+ <div class="card"><h3>Backup your data</h3><p class="muted">Your entries are stored on this iPhone/browser. Export a backup regularly, especially before clearing Safari website data or changing phones.</p><button class="btn" onclick="exportData()">Export backup</button> <label style="margin-top:14px">Restore from a backup file</label><input type="file" id="importFile" accept="application/json" onchange="importData(event)"></div>
+ <div class="card"><h3>Reset</h3><p class="muted">This permanently clears saved meals, workouts and measurements from this browser.</p><button class="btn secondary" onclick="resetData()">Reset all app data</button></div>
+ <div class="notice">Privacy: this app has no account, analytics, ads or server connection. Data stays in this browser's local storage. iPhone tip: open the file in Safari and use Share → Add to Home Screen if iOS offers that option. For best reliability, keep the original file and export backups.</div>
+</section>
+<footer>FORM · Made for consistency, not perfection · Offline by design</footer>
+</main>
+<nav>
+ <button class="active" data-tab="home" onclick="showTab('home')"><span class="ico">⌂</span>Home</button>
+ <button data-tab="diet" onclick="showTab('diet')"><span class="ico">◒</span>Diet</button>
+ <button data-tab="workout" onclick="showTab('workout')"><span class="ico">↗</span>Workout</button>
+ <button data-tab="progress" onclick="showTab('progress')"><span class="ico">▥</span>Progress</button>
+ <button data-tab="settings" onclick="showTab('settings')"><span class="ico">⚙</span>Settings</button>
+</nav>
+<script>
+const KEY='form_offline_v1';
+const base={
+ targets:{cal:1950,pro:150,water:2500,steps:6000},
+ water:{}, meals:{}, portions:{}, progress:[], workouts:{}, feedback:{}
+};
+let data=load();
+function load(){try{return {...structuredClone(base),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){return structuredClone(base)}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function today(){return new Date().toISOString().slice(0,10)}
+function dayIndex(){let d=new Date();return (Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,0,5))/86400000)%7+7)%7}
+const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const mealPlans=[
+[
+['Breakfast','2 whole eggs + 3 egg whites, oats 40 g, toned milk 200 ml, 1 banana',520,39],
+['Mid-morning','Hung curd / high-protein curd 200 g + roasted chana 20 g',220,22],
+['Lunch','Soya chunks 50 g dry + 2 rotis + vegetables + salad',500,35],
+['Snack','Toned milk 250 ml + 1 fruit + 8 almonds',250,12],
+['Dinner','Low-fat paneer 120 g + dal 1 bowl + rice 100 g cooked + vegetables',460,42]
+],
+[
+['Breakfast','Vegetable besan chilla (besan 60 g) + curd 150 g',420,24],
+['Mid-morning','2 boiled eggs + 1 fruit',220,13],
+['Lunch','Rajma 1 bowl + rice 150 g cooked + curd 100 g + salad',500,22],
+['Snack','Milk 250 ml + roasted chana 30 g',230,15],
+['Dinner','Soya bhurji (50 g dry soya) + 2 rotis + vegetables',560,40]
+],
+[
+['Breakfast','Oats 50 g + milk 250 ml + 2 eggs',470,29],
+['Mid-morning','High-protein curd 200 g',140,20],
+['Lunch','Paneer 120 g + 2 rotis + vegetables + salad',550,34],
+['Snack','Sprouts chaat 1 bowl + buttermilk',190,12],
+['Dinner','Moong dal 1.5 bowls + rice 120 g cooked + 2 egg whites',500,30]
+],
+[
+['Breakfast','2 eggs + 2 whites + 2 whole-wheat toast + fruit',430,30],
+['Mid-morning','Curd 200 g + roasted chana 25 g',230,18],
+['Lunch','Chole 1 bowl + 2 rotis + salad + curd 100 g',560,24],
+['Snack','Milk 250 ml + 10 almonds',210,11],
+['Dinner','Soya chunks 50 g dry + vegetable pulao 150 g cooked + raita',440,37]
+],
+[
+['Breakfast','Paneer bhurji 100 g + 2 rotis',440,27],
+['Mid-morning','2 boiled eggs + fruit',220,13],
+['Lunch','Dal 1 bowl + soya chunks 35 g dry + 2 rotis + vegetables',540,36],
+['Snack','High-protein curd 200 g',140,20],
+['Dinner','Egg curry (2 eggs + 2 whites) + rice 150 g cooked + vegetables',520,32]
+],
+[
+['Breakfast','Besan chilla 60 g + 2 eggs + mint curd',480,31],
+['Mid-morning','Milk 250 ml + fruit',190,9],
+['Lunch','Soya pulao (50 g dry soya) + raita + salad',520,38],
+['Snack','Roasted chana 30 g + buttermilk',180,10],
+['Dinner','Paneer 100 g + dal 1 bowl + 2 small rotis + vegetables',500,32]
+],
+[
+['Breakfast','Oats 40 g + milk 200 ml + 2 eggs + banana',500,30],
+['Mid-morning','Hung curd 200 g',150,20],
+['Lunch','Mixed dal 1 bowl + 2 rotis + curd + salad',500,25],
+['Snack','Sprouts chaat + milk 200 ml',230,17],
+['Dinner','Soya chunks 40 g dry + paneer 75 g + vegetables + 1 roti',500,42]
+]
+];
+const workouts=[
+{title:'Full Body A',desc:'Strength · controlled reps · 2–3 reps in reserve',duration:'30 min',items:[['Chair / bodyweight squat','3 × 8–12'],['Incline push-up (wall/counter)','3 × 6–12'],['Glute bridge','3 × 12–15'],['Prone Y–T–W raises','2 × 8 each position'],['Dead bug','3 × 8 each side'],['Calf raises','2 × 15–20']]},
+{title:'Walk + mobility',desc:'Easy aerobic base; conversational pace',duration:'25–35 min',items:[['Brisk walk','25–35 min'],['Cat-cow','2 × 8'],['Hip-flexor stretch','2 × 30 sec each side'],['Thoracic rotations','2 × 8 each side']]},
+{title:'Full Body B',desc:'Strength · smooth technique, no grinding reps',duration:'30 min',items:[['Reverse lunge (hold support)','3 × 8 each side'],['Knee / incline push-up','3 × 6–12'],['Single-leg glute bridge (or regular)','2 × 8 each side'],['Reverse snow angels','2 × 10–12'],['Bird dog','3 × 8 each side'],['Side plank (knees if needed)','2 × 20–30 sec each side']]},
+{title:'Walk + mobility',desc:'Keep it easy; recover while moving',duration:'25–35 min',items:[['Brisk walk','25–35 min'],['Ankle mobility','2 × 10'],['Hamstring stretch','2 × 30 sec each side'],['Shoulder wall slides','2 × 10']]},
+{title:'Full Body A',desc:'Repeat and aim for cleaner reps or 1 extra rep',duration:'30 min',items:[['Chair / bodyweight squat','3 × 8–12'],['Incline push-up','3 × 6–12'],['Glute bridge','3 × 12–15'],['Prone Y–T–W raises','2 × 8 each position'],['Dead bug','3 × 8 each side'],['Calf raises','2 × 15–20']]},
+{title:'Active recovery',desc:'Low effort; finish feeling better than you started',duration:'15–25 min',items:[['Comfortable walk','15–25 min'],['Full-body mobility','8–10 min']]},
+{title:'Rest day',desc:'Rest is part of the programme',duration:'—',items:[['Optional easy walk','As comfortable'],['Sleep and meal prep','Prioritise recovery']]}
+];
+let selectedDay=dayIndex(), selectedWork=dayIndex();
+function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));if(id==='progress')drawChart();window.scrollTo(0,0)}
+function mealKey(day,i){return `${day}-${i}`}
+function getMealTotals(){let c=0,p=0,done=0;mealPlans[selectedDay].forEach((m,i)=>{let k=mealKey(selectedDay,i),mult=data.portions[k]||1;if(data.meals[todayKey(selectedDay,i)])done++;c+=m[2]*mult;p+=m[3]*mult});return {c:Math.round(c),p:Math.round(p),done}}
+function todayKey(d,i){return `${today()}-${d}-${i}`}
+function renderMeals(){document.getElementById('dayPicker').innerHTML=days.map((d,i)=>`<button class="${i===selectedDay?'active':''}" onclick="selectedDay=${i};renderMeals()">${d}</button>`).join('');document.getElementById('dietDayTitle').textContent=`${days[selectedDay]} · ${['Balanced eggetarian','Besan & rajma','Paneer-focused','Chole & soya','Dal & eggs','Soya & paneer','Balanced protein'][selectedDay]}`;document.getElementById('mealList').innerHTML=mealPlans[selectedDay].map((m,i)=>{let k=mealKey(selectedDay,i),mult=data.portions[k]||1,done=!!data.meals[todayKey(selectedDay,i)];return `<div class="meal"><div class="foodline"><input type="checkbox" ${done?'checked':''} onchange="data.meals['${todayKey(selectedDay,i)}']=this.checked;persist()"><div style="flex:1"><div class="foodname">${m[0]}</div><div class="foodmeta">${m[1]}</div><div class="foodmeta">${Math.round(m[2]*mult)} kcal · ${Math.round(m[3]*mult)} g protein</div></div><div class="controls"><button class="smallbtn" onclick="portion(${selectedDay},${i},-0.25)">−</button><span class="muted">${mult.toFixed(2).replace(/0+$/,'').replace(/\\.$/,'')}×</span><button class="smallbtn" onclick="portion(${selectedDay},${i},0.25)">+</button></div></div></div>`}).join('');let t=getMealTotals();document.getElementById('dietTotals').textContent=`${t.c} kcal · ${t.p} g protein`}
+function portion(d,i,delta){let k=mealKey(d,i),v=Math.max(.25,Math.min(3,(data.portions[k]||1)+delta));data.portions[k]=v;persist()}
+function addWater(n){data.water[today()]=(data.water[today()]||0)+n;persist()}
+function renderHome(){let w=data.water[today()]||0;document.getElementById('waterNow').textContent=w+' ml';document.getElementById('waterBar').style.width=Math.min(100,w/data.targets.water*100)+'%';let d=dayIndex();document.getElementById('dayLabel').textContent='Day '+(d+1);document.getElementById('focusType').textContent=workouts[d].title;document.getElementById('focusTitle').textContent=workouts[d].title;document.getElementById('focusSub').textContent=workouts[d].desc;document.getElementById('waterButtons').innerHTML=[250,500,750].map(n=>`<button onclick="addWater(${n})">+${n} ml</button>`).join('');let c=0,p=0,done=0;mealPlans[d].forEach((m,i)=>{let mult=data.portions[mealKey(d,i)]||1;if(data.meals[todayKey(d,i)]){c+=m[2]*mult;p+=m[3]*mult;done++}});document.getElementById('calNow').textContent=Math.round(c);document.getElementById('proNow').textContent=Math.round(p)+' g';document.getElementById('calTarget').textContent='of '+data.targets.cal+' kcal';document.getElementById('calBar').style.width=Math.min(100,c/data.targets.cal*100)+'%';document.getElementById('proBar').style.width=Math.min(100,p/data.targets.pro*100)+'%';document.getElementById('mealsNow').textContent=done+'/5';document.getElementById('mealBar').style.width=done*20+'%'}
+function renderWorkout(){document.getElementById('workDays').innerHTML=days.map((d,i)=>`<button class="${i===selectedWork?'active':''}" onclick="selectedWork=${i};renderWorkout()">${d}</button>`).join('');let w=workouts[selectedWork];document.getElementById('workTitle').textContent=w.title;document.getElementById('workDesc').textContent=w.desc;document.getElementById('workDuration').textContent=w.duration;document.getElementById('exerciseList').innerHTML=w.items.map((x,i)=>`<div class="exercise"><div class="row"><b>${x[0]}</b><span class="muted">${x[1]}</span></div></div>`).join('');let saved=data.workouts[today()+'-'+selectedWork];document.getElementById('workSaved').textContent=saved?'Saved today: '+saved.feedback+' · '+(saved.note||'No notes'):'';document.getElementById('feedback').value=saved?.feedback||'About right';document.getElementById('workNote').value=saved?.note||''}
+function saveWorkout(){data.workouts[today()+'-'+selectedWork]={feedback:document.getElementById('feedback').value,note:document.getElementById('workNote').value};persist();document.getElementById('workSaved').textContent='Session saved on this device.'}
+function addProgress(){let w=parseFloat(document.getElementById('weightInput').value),z=parseFloat(document.getElementById('waistInput').value);if(!Number.isFinite(w)&&!Number.isFinite(z)){alert('Enter weight or waist first.');return}let existing=data.progress.find(x=>x.date===today());if(existing){if(Number.isFinite(w))existing.weight=w;if(Number.isFinite(z))existing.waist=z}else data.progress.push({date:today(),weight:Number.isFinite(w)?w:null,waist:Number.isFinite(z)?z:null});data.progress.sort((a,b)=>a.date.localeCompare(b.date));persist();document.getElementById('progressSaved').textContent='Measurements saved.'}
+function drawChart(){let c=document.getElementById('progressChart'),ctx=c.getContext('2d'),arr=data.progress.filter(x=>x.weight!=null);ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='#dfe6ed';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,20);ctx.lineTo(40,260);ctx.lineTo(615,260);ctx.stroke();if(!arr.length){ctx.fillStyle='#718096';ctx.font='18px sans-serif';ctx.fillText('Add your first weight entry to see the trend',65,140);return}let vals=arr.map(x=>x.weight),min=Math.min(...vals)-1,max=Math.max(...vals)+1;if(max===min)max=min+1;ctx.fillStyle='#718096';ctx.font='14px sans-serif';ctx.fillText(max.toFixed(1)+' kg',3,30);ctx.fillText(min.toFixed(1)+' kg',3,255);ctx.strokeStyle='#237b62';ctx.lineWidth=4;ctx.beginPath();arr.forEach((x,i)=>{let px=50+(arr.length===1?0:i*555/(arr.length-1)),py=245-(x.weight-min)/(max-min)*210;i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke();arr.forEach((x,i)=>{let px=50+(arr.length===1?0:i*555/(arr.length-1)),py=245-(x.weight-min)/(max-min)*210;ctx.fillStyle='#237b62';ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fill()})}
+function renderHistory(){document.getElementById('progressHistory').innerHTML=data.progress.slice().reverse().slice(0,8).map(x=>`<div class="row" style="padding:8px 0;border-top:1px solid var(--line)"><span>${x.date}</span><b>${x.weight??'—'} kg · ${x.waist??'—'} cm</b></div>`).join('')||'<p class="muted">No measurements yet.</p>'}
+function saveTargets(){data.targets={cal:+targetCal.value||1950,pro:+targetPro.value||150,water:+targetWater.value||2500,steps:+targetSteps.value||6000};persist();alert('Targets saved.')}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='form-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let obj=JSON.parse(r.result);if(!obj.targets||!obj.progress)throw Error();data={...structuredClone(base),...obj};persist();alert('Backup restored.')}catch(err){alert('That backup file is not valid.')}};r.readAsText(f)}
+function resetData(){if(confirm('Clear all saved app data from this browser? This cannot be undone.')){localStorage.removeItem(KEY);data=structuredClone(base);persist()}}
+function renderAll(){renderHome();renderMeals();renderWorkout();renderHistory();drawChart();document.getElementById('targetCal').value=data.targets.cal;document.getElementById('targetPro').value=data.targets.pro;document.getElementById('targetWater').value=data.targets.water;document.getElementById('targetSteps').value=data.targets.steps}
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});
+renderAll();
+</script>
+<script>
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Offline cache setup failed:", err));
+  });
+}
+</script>
+</body></html>
